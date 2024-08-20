@@ -25,6 +25,10 @@ public protocol AppEnvironmentsProtocol {
 
 /// Set the required environment and database port will set accordingly
 public struct AppEnv: AppEnvironmentsProtocol {
+    public init(applicationEnvironment: AppEnvironments) {
+        self.applicationEnvironment = applicationEnvironment
+    }
+    
     public var applicationEnvironment: AppEnvironments
     
     public var databasePort: Int {
