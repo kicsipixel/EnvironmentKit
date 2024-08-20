@@ -11,12 +11,18 @@ let package = Package(
         .library(
             name: "EnvironmentKit",
             targets: ["EnvironmentKit"]),
+    ], dependencies: [
+        .package(url: "https://github.com/hummingbird-project/hummingbird.git", from: "2.0.0-rc.3")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "EnvironmentKit"),
+            name: "EnvironmentKit",
+            dependencies: [
+                .product(name: "Hummingbird", package: "hummingbird")
+            ]
+        ),
         .testTarget(
             name: "EnvironmentKitTests",
             dependencies: ["EnvironmentKit"]),

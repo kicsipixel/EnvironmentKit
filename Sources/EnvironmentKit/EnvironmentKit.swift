@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Hummingbird
 
 /// Different environments:
 /// - production: running in Docker
@@ -25,11 +26,23 @@ public protocol AppEnvironmentsProtocol {
 
 /// Set the required environment and database port will set accordingly
 public struct AppEnv: AppEnvironmentsProtocol {
-    public init(applicationEnvironment: AppEnvironments) {
+    public init(applicationEnvironment: AppEnvironments, env: Environment) {
         self.applicationEnvironment = applicationEnvironment
+        self.env = env
     }
     
     public var applicationEnvironment: AppEnvironments
+    
+    public let env: Environment
+    
+    public var hostname: String {
+        switch applicationEnvironment {
+        case .production:
+            env.get("DATABASE_HOST") ?? "localhost"
+        case .development, .test:
+            "localhost"
+        }
+    }
     
     public var databasePort: Int {
         switch applicationEnvironment {
